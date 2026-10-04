@@ -28,20 +28,24 @@ max 4 options each; the tool adds "Other" automatically):
 3. Want learning picks too? About the world (history, science, culture, ideas) ·
    Skills for work · Hobbies and hands-on (cooking, music, a language, fitness, making things) ·
    No, just entertainment
-4. Usual time when bored: <30 min · 1–2 hrs · a weekend binge · a multi-week book or series
+4. Any scenes you love? (where it's from matters as much as genre)
+   K-drama / C-drama / J-drama · Anime / manga · Indian (Bollywood or regional) ·
+   Other world TV and film (Turkish, Spanish, Nordic, British…). "Other" covers the rest.
 
 **Then one free-text message** asking for:
 - country, plus the languages they're happy watching or reading in (subtitles OK?).
   Country decides what's available where.
 - streaming services / apps / libraries they have
-- 3–5 all-time favourites of anything
+- 3–5 all-time favourites of anything. Infer scenes from these too: a K-drama
+  favourite means K-drama is a scene, even if they didn't tick it.
+- usual time when bored (<30 min, an evening, a weekend binge, a long book)
 - **curiosities**: any topics they've been meaning to learn about, from black holes
   and the Roman Empire to sourdough, chess, or how markets work. No list, their words.
 - what they do for work (optional, only used for Skills picks)
 - hard nos (gore, slow burns, sad endings, etc.)
 
 **Round B — calibration.** Show ~20 well-known titles as a numbered list,
-spread across their chosen formats and genres. Mix eras and countries, and
+spread across their chosen formats, genres and scenes (at least 4 per ticked scene). Mix eras and countries, and
 include titles that are popular in their country and languages, not only
 English-language hits. Ask them to reply in one line, e.g. `1L 2D 5L 7- …`:
 L = liked, D = disliked, `-` or omitted = not seen.
@@ -51,7 +55,7 @@ Write `~/.claude/bored/taste-profile.md`:
 
 ```
 # Taste profile
-## Profile          — formats, genres, country, languages, services, work, time budgets, hard nos
+## Profile          — formats, genres, scenes, country, languages, services, work, time budgets, hard nos
 ## Curiosities      — `- topic — why/where it came from — last picked YYYY-MM-DD`; grows over time
 ## Taste signals    — patterns inferred from likes/dislikes, marked (inferred)
 ## Seen             — `- Title (type) — liked|disliked|meh — one-line why, date`
@@ -81,7 +85,7 @@ entirely; the markdown profile works on its own. Say so once.
 **Shelf** — collection `items`, one doc per title: title, type
 (show|movie|novel|book|learning|video|podcast|anime|documentary|game|comic|audiobook|article|course;
   any other short lowercase type also works),
-status (want|doing|done|dropped), genres[], moods[], rating (0-5),
+status (want|doing|done|dropped), genres[] (include the scene, e.g. "K-drama"), moods[], rating (0-5),
 score (/10 or null), length, where, note, addedAt (ms).
 
 **Tracks** — collection `tracks`, one doc per track: name, color, order, blurb,
@@ -95,7 +99,8 @@ steps[{level,title,kind,length,url,why,status}].
 2. One quick `AskUserQuestion` (skip if they already said): mood
    (switch off / be gripped / learn something / laugh) and time available.
 3. Give **3 picks**, different formats where possible:
-   - **Safe bet** — closest match to Seen-liked titles
+   - **Safe bet** — closest match to Seen-liked titles. If they have scenes,
+     at least one of the 3 picks comes from one of them, every time.
    - **Stretch** — adjacent genre/format they haven't tried
    - **Learn** — from Curiosities, whatever the domain. Rotate: pick the topic
      least recently picked, in a format they like (a doc for watchers, a book for
@@ -122,7 +127,8 @@ the verdict and their why, flip its Recommended status, update Taste signals
 if it shifts a pattern, and update the shelf doc (status `done`/`dropped` +
 rating) in the same turn.
 
-"Update my profile" = edit the Profile section in place; show the change first.
+"Update my profile" or "add <scene/genre>" = edit the Profile section in place; show the change first.
+A newly added scene gets 4–5 quick calibration titles (same `1L 2D` reply format).
 
 ## 4. Upskill tracks (any skill, work or hobby)
 
