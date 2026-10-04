@@ -1,0 +1,7 @@
+{
+  "name": "bored-plugin",
+  "owner": { "name": "openmohit28" },
+  "plugins": [
+    { "name": "bored", "source": "./", "description": "Taste-profile recommendations + Up Next shelf + Upskill Tracks." }
+  ]
+}

@@ -1,0 +1,207 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Upskill Tracks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Figtree:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --bg:#f6f4ef; --surface:#ffffff; --ink:#1d1b24; --muted:#615d6c; --line:#e2ded5; --rail:#d4cfc4;
+  --blue:#1f5fd1; --green:#13865a; --orange:#d0601a; --magenta:#b8306f; --violet:#6a45c9; --teal:#0f7f86;
+  --good:#13865a; --warn:#b4640b; --soft:#efece4;
+  --display:"Sora",ui-sans-serif,system-ui,sans-serif;
+  --body:"Figtree",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;--bg:#14131a;--surface:#1d1c25;--ink:#ecebf2;--muted:#a19dae;--line:#2d2b38;--rail:#3a3747;
+  --blue:#7ea6ff;--green:#4fd19a;--orange:#ff9a5c;--magenta:#f27db4;--violet:#a98bff;--teal:#4fd0d6;
+  --good:#4fd19a;--warn:#f2b45c;--soft:#25242f;}}
+:root[data-theme="dark"]{
+  color-scheme:dark;--bg:#14131a;--surface:#1d1c25;--ink:#ecebf2;--muted:#a19dae;--line:#2d2b38;--rail:#3a3747;
+  --blue:#7ea6ff;--green:#4fd19a;--orange:#ff9a5c;--magenta:#f27db4;--violet:#a98bff;--teal:#4fd0d6;
+  --good:#4fd19a;--warn:#f2b45c;--soft:#25242f;}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--body);padding-inline:16px;padding-block:32px 72px}
+.wrap{max-width:760px;margin:0 auto;display:grid;gap:28px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--c,var(--blue));outline-offset:3px}
+a{color:inherit}
+
+header{display:grid;gap:6px}
+.kicker{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font:700 clamp(30px,6vw,42px)/1.08 var(--display);margin:0;letter-spacing:-.02em;text-wrap:balance}
+.lede{margin:0;color:var(--muted);max-width:58ch}
+
+/* track switcher: one card per line */
+.lines{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.line{--c:var(--blue);text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px 14px;display:grid;gap:8px;position:relative;overflow:hidden;transition:border-color .15s,transform .15s}
+.line::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:var(--c)}
+.line:hover{transform:translateY(-1px)}
+.line[aria-pressed="true"]{border-color:var(--c);box-shadow:0 0 0 1px var(--c)}
+.line .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.line b{font:600 15px var(--display)}
+.line .count{font:500 12px var(--mono);color:var(--muted);font-variant-numeric:tabular-nums}
+.line .nx{font-size:13px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.bar{height:4px;border-radius:99px;background:var(--soft);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--c);border-radius:99px;transition:width .4s}
+
+/* the active track */
+.track{--c:var(--blue);display:grid;gap:18px}
+.thead{display:grid;gap:4px}
+.thead h2{font:700 24px var(--display);margin:0;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+.thead h2 .dot{width:14px;height:14px;border-radius:50%;background:var(--c)}
+.thead p{margin:0;color:var(--muted);font-size:14px;max-width:62ch}
+
+.now{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:14px;padding:18px;display:grid;gap:12px}
+.now .eyebrow{font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--c)}
+.now h3{font:600 20px/1.3 var(--display);margin:0;text-wrap:balance}
+.now .why{margin:0;color:var(--muted);font-size:14px}
+.open{justify-self:start;display:inline-flex;align-items:center;gap:8px;background:var(--c);color:var(--bg);font-weight:600;text-decoration:none;padding:9px 16px;border-radius:999px}
+.fb{display:grid;gap:8px;border-top:1px dashed var(--line);padding-top:12px}
+.fb span{font-size:13px;color:var(--muted)}
+.fbtns{display:flex;flex-wrap:wrap;gap:8px}
+.fbtns button{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:7px 13px;font-size:14px;font-weight:500;transition:border-color .15s,background .15s}
+.fbtns button:hover{border-color:var(--c)}
+.fbtns button:disabled{opacity:.5;cursor:default}
+.finished{background:var(--surface);border:1px dashed var(--c);border-radius:14px;padding:18px}
+.finished h3{font:600 18px var(--display);margin:0 0 4px}
+.finished p{margin:0;color:var(--muted)}
+
+/* route map */
+.route{list-style:none;margin:0;padding:0;display:grid}
+.zone{font:500 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:6px 0 10px 40px;position:relative}
+.zone::before{content:"";position:absolute;left:11px;top:0;bottom:0;width:4px;background:var(--rail)}
+.zone.first::before{top:50%}
+.stop{position:relative;display:grid;grid-template-columns:26px 1fr;gap:14px;padding-bottom:16px}
+.stop::before{content:"";position:absolute;left:11px;top:0;bottom:0;width:4px;background:var(--rail)}
+.stop.passed::before{background:var(--c)}
+.stop:last-child{padding-bottom:0}
+.stop:last-child::before{bottom:auto;height:12px}
+.pin{position:relative;z-index:1;width:26px;height:26px;border-radius:50%;border:4px solid var(--rail);background:var(--bg);margin-top:1px}
+.stop.passed .pin{border-color:var(--c);background:var(--c)}
+.stop.current .pin{border-color:var(--c);background:var(--bg);box-shadow:0 0 0 5px color-mix(in srgb,var(--c) 22%,transparent)}
+.stop.flag .pin{border-color:var(--warn);background:var(--warn)}
+.sbody{display:grid;gap:3px;min-width:0}
+.srow{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.stitle{font-weight:600;overflow-wrap:anywhere}
+.stitle a{text-decoration-color:var(--line);text-underline-offset:3px}
+.stitle a:hover{text-decoration-color:var(--c)}
+.stop.queued .stitle,.stop.queued .why2{color:var(--muted)}
+.meta2{font:500 12px var(--mono);color:var(--muted)}
+.why2{font-size:14px;color:var(--muted)}
+.chip{font:500 11px var(--mono);letter-spacing:.03em;padding:2px 8px;border-radius:999px;background:var(--soft);color:var(--muted)}
+.chip.good{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--good)}
+.chip.warn{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.chip.cur{background:var(--c);color:var(--bg)}
+.undo{border:0;background:none;padding:0;font-size:12px;color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+
+.how{border-top:1px solid var(--line);padding-top:18px;display:grid;gap:8px}
+.how h4{font:500 12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0}
+.how ul{margin:0;padding-left:18px;display:grid;gap:5px;color:var(--muted);font-size:14px}
+.how q{color:var(--ink);font-weight:500}
+.banner{background:var(--soft);border-radius:10px;padding:10px 14px;font-size:14px}
+.skel{height:80px;border-radius:12px;background:var(--soft)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);opacity:0;background:var(--ink);color:var(--bg);padding:10px 14px;border-radius:10px;display:flex;gap:14px;align-items:center;font-weight:500;transition:all .25s;pointer-events:none;max-width:calc(100vw - 32px)}
+.toast.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+.toast button{border:0;background:none;color:inherit;font-weight:700;text-decoration:underline;padding:0}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="kicker">Small lessons, one stop at a time</span>
+    <h1>Upskill Tracks</h1>
+    <p class="lede">Pick a line, take the next stop, and tell it how it went. Claude reads your taps and adds the next lesson at the right level.</p>
+  </header>
+
+  <div id="banner" class="banner" hidden></div>
+  <nav class="lines" id="lines" aria-label="Your tracks"><div class="skel"></div><div class="skel"></div></nav>
+  <section class="track" id="track" aria-live="polite"></section>
+
+  <div class="how">
+    <h4>How updating works</h4>
+    <ul>
+      <li>Tap how a lesson went on the current stop. The next stop moves up, and you can undo a tap.</li>
+      <li>Next time you run <q>/bored</q> or say <q>sync my tracks</q>, Claude copies your taps into your taste profile and adds the next lesson: harder if you liked it, easier if it lost you.</li>
+      <li>Say <q>start a track on system design</q> (or any topic) for a new line. It shows up here as another card.</li>
+      <li>Saying it in chat works too: <q>done #2, too easy</q>.</li>
+    </ul>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"><span id="tmsg"></span><button id="tundo" type="button" hidden>Undo</button></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const COLORS=["blue","green","orange","magenta","violet","teal"];
+const VERDICT={"done-liked":["Liked it","good"],"done-meh":["It was okay","good"],"too-easy":["Too easy","good"],"skipped-known":["Knew it","good"],"lost-me":["Lost me","warn"]};
+const FEEDBACK=[["done-liked","Liked it"],["done-meh","It was okay"],["too-easy","Too easy"],["lost-me","Lost me"],["skipped-known","Already knew this"]];
+const LEVELS={basics:"Basics",intermediate:"Intermediate",advanced:"Advanced"};
+let db=null,tracks=[],active=null,writing=Promise.resolve();
+try{active=localStorage.getItem("ut.active")}catch{}
+
+const resolved=s=>s.status in VERDICT;
+const colorOf=t=>`var(--${COLORS.includes(t.color)?t.color:"blue"})`;
+const nextIdx=t=>(t.steps||[]).findIndex(s=>!resolved(s));
+
+function render(){
+  if(!tracks.length){$("#lines").innerHTML="";$("#track").innerHTML=`<div class="finished"><h3>No tracks yet</h3><p>Tell Claude <q>start a track on</q> any topic and it appears here.</p></div>`;return}
+  if(!tracks.some(t=>t.id===active))active=tracks[0].id;
+  $("#lines").innerHTML=tracks.map(t=>{
+    const steps=t.steps||[],done=steps.filter(resolved).length,n=nextIdx(t);
+    return `<button type="button" class="line" style="--c:${colorOf(t)}" data-id="${esc(t.id)}" aria-pressed="${t.id===active}">
+      <span class="top"><b>${esc(t.name)}</b><span class="count">${done}/${steps.length}</span></span>
+      <span class="bar"><i style="width:${steps.length?done/steps.length*100:0}%"></i></span>
+      <span class="nx">${n<0?"All stops done. Ask for the next level.":"Next: "+esc(steps[n].title)}</span></button>`}).join("");
+  drawTrack(tracks.find(t=>t.id===active));
+}
+
+function drawTrack(t){
+  const steps=t.steps||[],n=nextIdx(t),cur=steps[n];
+  let html=`<div class="thead"><h2><span class="dot"></span>${esc(t.name)}</h2>${t.blurb?`<p>${esc(t.blurb)}</p>`:""}</div>`;
+  html+=cur?`<article class="now">
+      <span class="eyebrow">Stop ${n+1} of ${steps.length} · ${esc(LEVELS[cur.level]||cur.level)}${cur.length?" · "+esc(cur.length):""}</span>
+      <h3>${esc(cur.title)}</h3>${cur.why?`<p class="why">${esc(cur.why)}</p>`:""}
+      ${cur.url?`<a class="open" href="${esc(cur.url)}" target="_blank" rel="noopener">Open ${esc(cur.kind||"lesson")} ↗</a>`:""}
+      <div class="fb"><span>Finished it? How did it go?</span><div class="fbtns">${FEEDBACK.map(([k,l])=>`<button type="button" data-v="${k}" data-i="${n}" ${db?"":"disabled"}>${l}</button>`).join("")}</div></div>
+    </article>`
+   :`<div class="finished"><h3>Line complete</h3><p>Say <q>sync my tracks</q> and Claude adds the next level.</p></div>`;
+  let zone=null;
+  html+=`<ol class="route">`+steps.map((s,i)=>{
+    let z="";if(s.level!==zone){z=`<li class="zone${zone===null?" first":""}" aria-hidden="true">${esc(LEVELS[s.level]||s.level)}</li>`;zone=s.level}
+    const v=VERDICT[s.status],cls=v?(s.status==="lost-me"?"passed flag":"passed"):i===n?"current":"queued";
+    const chip=v?`<span class="chip ${v[1]}">${v[0]}</span> <button type="button" class="undo" data-reset="${i}" ${db?"":"hidden"}>undo</button>`:i===n?`<span class="chip cur">Up next</span>`:`<span class="chip">Queued</span>`;
+    return z+`<li class="stop ${cls}"><span class="pin"></span><div class="sbody">
+      <div class="srow"><span class="stitle">${s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>`:esc(s.title)}</span></div>
+      <div class="srow">${chip}<span class="meta2">${esc([s.kind,s.length].filter(Boolean).join(" · "))}</span></div>
+      ${s.why?`<div class="why2">${esc(s.why)}</div>`:""}</div></li>`}).join("")+`</ol>`;
+  const el=$("#track");el.style.setProperty("--c",colorOf(t));el.innerHTML=html;
+}
+
+let undoFn=null;
+function toast(msg,undo){$("#tmsg").textContent=msg;undoFn=undo||null;$("#tundo").hidden=!undo;$("#toast").classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>$("#toast").classList.remove("show"),undo?6000:2200)}
+$("#tundo").onclick=()=>{const f=undoFn;undoFn=null;$("#toast").classList.remove("show");f&&f()};
+
+function setStatus(id,i,status,msg,withUndo){
+  const t=tracks.find(x=>x.id===id);if(!t)return;
+  const before=t.steps,steps=before.map((s,j)=>j===i?{...s,status,updatedAt:new Date().toISOString()}:s);
+  writing=writing.then(()=>db.collection("tracks").doc(t.id).update({steps}))
+    .then(()=>toast(msg,withUndo?()=>setStatus(id,i,before[i].status||"pending","Undone",false):null))
+    .catch(e=>toast(e?.code==="invalid_argument"?"You can view this page but not change it.":"Couldn't save. Try again."));
+}
+
+$("#lines").onclick=e=>{const b=e.target.closest(".line");if(!b)return;active=b.dataset.id;try{localStorage.setItem("ut.active",active)}catch{};render()};
+$("#track").onclick=e=>{
+  const t=tracks.find(x=>x.id===active);if(!t||!db)return;
+  const f=e.target.closest("[data-v]");if(f){f.closest(".fbtns").querySelectorAll("button").forEach(b=>b.disabled=true);setStatus(t.id,+f.dataset.i,f.dataset.v,`Saved: ${VERDICT[f.dataset.v][0]}`,true);return}
+  const r=e.target.closest("[data-reset]");if(r)setStatus(t.id,+r.dataset.reset,"pending","Moved back to up next",false);
+};
+
+(async()=>{
+  db=await window.claude?.use?.("db")??null;
+  if(!db){$("#banner").hidden=false;$("#banner").textContent="This view can't reach your tracks. Open it on claude.ai while signed in.";$("#lines").innerHTML="";return}
+  db.collection("tracks").orderBy("order").onSnapshot(s=>{tracks=s.docs.map(d=>({id:d.id,...d.data()}));render()},
+    ()=>{$("#banner").hidden=false;$("#banner").textContent="Lost the connection to your tracks. Reload the page to reconnect."});
+})();
+</script>
+
+</body></html>
