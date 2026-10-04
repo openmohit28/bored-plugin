@@ -6,7 +6,9 @@ description: Recommend something to watch, read, or learn when the user is bored
 # Bored → recommendation
 
 State lives in ONE file: `~/.claude/bored/taste-profile.md` (plain markdown).
-Read it first, every time.
+Read it first, every time. If the home folder isn't writable or doesn't persist
+(e.g. Cowork), use `bored/taste-profile.md` in the user's working folder instead,
+and check both places before deciding the profile is missing.
 
 ## 1. File missing → onboarding (once only)
 
